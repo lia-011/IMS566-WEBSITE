@@ -1,0 +1,812 @@
+body {     
+  margin: 0;          
+  overflow: hidden;   
+  width: 100%;
+  background-image: url(../images/star.png);
+  background-size: cover;
+  background-position: center;
+}
+@media (min-width: 992px) {        /* only on lg and up, keeps mobile click working */
+  .nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+  
+
+  /* Smooth fade-in */
+  .dropdown-menu {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    display: block;
+    visibility: hidden;
+  }
+  
+  .nav-item.dropdown:hover > .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+
+@font-face {
+    font-family:"Syncopate-Bold";
+    src: url(../font/Syncopate-Bold.ttf);
+}
+.navbar-nav {
+  display: flex !important;                /* ensure flex layout */
+  gap: 1rem !important;                    /* space between items */
+  font-family: 'Syncopate-Bold', sans-serif !important;  /* your custom font */
+  font-size: 12px !important; 
+
+}
+.navbar-title {
+  font-family: 'Syncopate-Bold', sans-serif !important; /* your font */
+  font-size: 12px !important;                          /* adjust size */
+  letter-spacing: 1px;                                   /* optional spacing between letters */
+}
+
+
+/* Starfield inside dropdown + glassy dark look */
+.dropdown-menu {
+  background: rgba(10, 10, 30, 0.85) !important;   /* Deep space color */
+  backdrop-filter: blur(10px);                     /* Glassmorphism */
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  border-radius: 12px;
+  overflow: hidden;                                /* Important for the pseudo-canvas */
+}
+
+/* This creates moving stars inside the dropdown */
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+    radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, #eee, transparent),
+    radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 50px 20px, #fff, transparent),
+    radial-gradient(2px 2px at 80px 60px, #eee, transparent),
+    radial-gradient(1px 1px at 110px 10px, #fff, transparent),
+    radial-gradient(2px 2px at 150px 50px, #eee, transparent),
+    radial-gradient(1px 1px at 180px 80px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: starfieldMove 25s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes starfieldMove {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100px; }
+}
+
+/* Make dropdown items pop */
+.dropdown-item {
+  color: #bbd0ff !important;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(100, 150, 255, 0.25) !important;
+  color: white !important;
+  text-shadow: 0 0 10px rgba(100, 200, 255, 0.8);
+}
+#main-navbar {
+  overflow: visible !important;        /* Crucial */
+  z-index: 1050;                       /* Same as Bootstrap navbar default */
+}
+
+#starfield {
+  z-index: 0;                          /* Behind everything */
+  pointer-events: none;                /* Lets clicks pass through to navbar */
+}
+
+#main-navbar .position-relative,
+#main-navbar a,
+#main-navbar button,
+#main-navbar ul,
+#main-navbar .dropdown-menu {
+  z-index: 10;                         /* Above the canvas */
+}
+
+/* Make sure dropdown appears above canvas */
+.dropdown-menu {
+  z-index: 1060 !important;            /* Higher than navbar */
+
+}#toggle-dark-navbar {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Toggle track */
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  overflow: hidden;
+}
+
+/* Icon (sun/moon) */
+.toggle-icon {
+  position: absolute;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 6px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 4px #ffdd55);
+  pointer-events: none;
+}
+
+/* Comet Trail */
+.toggle-comet {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 10px;
+  height: 4px;
+  background: linear-gradient(to right, rgba(255,255,255,0.7), transparent);
+  transform: translateY(-50%);
+  border-radius: 10px;
+  opacity: 0;
+  transition: all 0.35s ease;
+  filter: drop-shadow(0 0 6px #ffffff);
+}
+
+.trail-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Trail particle */
+.trail-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffd86b;
+  filter: drop-shadow(0 0 6px #ffd86b);
+  animation-fill-mode: forwards;
+}
+
+/* Moon color */
+.trail-particle.moon-mode {
+  background: #00eaff;
+  filter: drop-shadow(0 0 10px #00eaff);
+}
+
+@keyframes comet {
+  0% { transform: translateX(0) translateY(var(--scatter-y)) scale(1); opacity: 1; }
+  100% { transform: translateX(var(--distance, 28px)) translateY(var(--scatter-y)) scale(0.3); opacity: 0; }
+}
+
+/* DARK MODE — move icon to right (moon) */
+#toggle-dark-navbar:checked + .toggle-label .toggle-icon {
+  left: 34px;
+  content: "🌙";
+  filter: drop-shadow(0 0 6px #00eaff) drop-shadow(0 0 12px #00eaff);
+}
+
+/* Comet trail activates */
+#toggle-dark-navbar:checked + .toggle-label .toggle-comet {
+  opacity: 1;
+  width: 26px;
+  left: 8px;
+  background: linear-gradient(to right, rgba(0,255,255,0.8), transparent);
+  filter: drop-shadow(0 0 10px #00ffff);
+  animation: cometMove 0.35s ease forwards;
+}
+
+/* COMET MOVEMENT */
+@keyframes cometMove {
+  0% { transform: translate(-5px, -50%); opacity: 1; }
+  100% { transform: translate(25px, -50%); opacity: 0; }
+}
+
+/* Light mode sun glow */
+#toggle-dark-navbar:not(:checked) + .toggle-label .toggle-icon {
+  filter: drop-shadow(0 0 6px #ffdd55) drop-shadow(0 0 12px #ffcc33);
+}
+
+/* Light mode comet (reverse direction) */
+#toggle-dark-navbar:not(:checked) + .toggle-label .toggle-comet {
+  background: linear-gradient(to right, rgba(255,200,0,0.8), transparent);
+}
+/* Light mode overlay */
+body.light-mode::before,
+body.dark-mode::before {
+  content: "";
+  position: fixed; /* fixed so it covers viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1; /* behind content but above background */
+}
+
+/* Light mode tint */
+body.light-mode::before {
+  background-color: rgba(255,255,255,0.05); /* slight light tint */
+}
+
+/* Dark mode overlay */
+body.dark-mode::before {
+  background-color: rgba(0,0,0,0.7); /* dark overlay */
+}
+body.dark-mode .login-card,
+body.dark-mode .register-card,
+body.dark-mode .dashboard-right .card,
+body.dark-mode .dashboard-chart-card {
+  background: rgba(20,20,20,0.8);
+  color: #fff;
+}
+
+
+/* Fixed top and background */
+#main-navbar {
+  position: relative;           /* Needed for the canvas to be positioned inside */
+  overflow: hidden;             /* Prevents stars from leaking out */
+  background: rgba(0, 0, 20, 0.8); /* fallback color */
+
+}
+  .navbar .dropdown-toggle::after {
+  display: none; /* hides the arrow */
+}
+
+/* Make sure navbar text/links stay on top */
+.navbar-brand,
+.navbar-nav .nav-link,
+.form-check-label {
+  position: relative;
+  z-index: 1;
+}
+
+/* Navbar link hover effect */
+.navbar-nav .nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #58A6FF;
+  text-shadow: 0 0 5px #58A6FF;
+}
+
+/* ---------- NAVBAR ---------- */
+#main-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgb(0, 0, 6) !important;   /* slightly more transparent */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+/* Navbar brand/logo */
+#main-navbar .navbar-brand img {
+  border-radius: 50%;
+}
+
+/* Navbar links */
+#main-navbar .nav-link {
+  position: relative;
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+
+/* ===== DASHBOARD CONTAINER ===== */
+.dashboard-container {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 7rem 2rem 3rem 2rem;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: calc(100vh - 60px); 
+  flex-direction: column;
+}
+
+/* Dashboard Heading */
+.dashboard-container h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+/* Main flex container: chart left, cards right */
+.dashboard-main {
+  display: flex;
+  gap: 1.8rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+/* Chart card styling */
+.dashboard-chart-card {
+  width: 650px;
+  padding: 0.9rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(10px);
+  max-width: 1500px;
+}
+
+/* Chart canvas size */
+.dashboard-chart-card canvas {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  max-width: none;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.dashboard-right .right-top {
+  display: flex;
+  gap: 1rem;
+}
+
+#tempChart {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  padding: 1px;
+  max-height: 500px;   /* ← CANVAS HEIGHT LIMIT */ 
+}
+
+.chart-title {
+  text-align: center;
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #bbd0ff;
+}
+
+
+#tempChartCard,
+.dashboard-orbit-card {
+  flex: 1;           /* each takes half of right column */   
+  min-width: 150px;  
+  height: 400px;     /* smaller height */
+  max-width: 1200px; 
+}
+
+.dashboard-orbit-card {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow: hidden; /* ensures planets stay inside the box */
+  position: relative;
+}
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 700px; /* optional limit */
+}
+
+.dashboard-totals .card {
+  width: 90px;      /* smaller */
+  height: 90px;      /* shorter */
+  padding: 0.5rem;   /* less padding */
+}
+
+.dashboard-totals .card h5 {
+  font-size: 12px;   /* title smaller */
+}
+
+.dashboard-totals .card p {
+  font-size: 24px;   /* numbers smaller */
+}
+.dashboard-right .card {
+  border-radius: 12px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  padding: 1.2rem;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-right {
+    flex: 1;
+    max-width: 95%;
+  }
+
+  .dashboard-left {
+    min-width: 95%;
+  }
+}
+
+/* Dashboard Event Card */
+.dashboard-event-card {
+  border-radius: 12px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(10px);
+  color: #fff;
+}
+
+/* Space Events List */
+.space-events .list-group-item {
+  background: transparent;
+  border: none;
+  color: #bbd0ff;
+  transition: all 0.2s;
+}
+.space-events .list-group-item:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #58A6FF;
+}
+
+.orbit-animation {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sun {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #FFD700;
+  border-radius: 50%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px #FFD700;
+}
+
+/* Each orbit wrapper rotates */
+.orbit {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  animation: rotateOrbit linear infinite;
+}
+
+.planet {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: 0;
+  left: var(--radius, 40px); /* distance from sun */
+}
+
+.planet1 { background: #80A0FF; --radius: 40px; animation-duration: 6s; }
+.planet2 { background: #FFAA33; --radius: 55px; animation-duration: 10s; }
+.planet3 { background: #90FFB0; --radius: 70px; animation-duration: 14s; }
+
+@keyframes rotateOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.live-event-container {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.live-event-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff5555;      /* red for live effect */
+  text-shadow: 0 0 5px #ff0000;
+  margin-bottom: 0.3rem;
+  text-align: center;
+}
+
+.live-event {
+  width: 100%;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center; /* vertically centers text */
+  position: relative;
+  border: 1px solid #ff5555;
+}
+
+.space-events-wrapper {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-events 60s linear infinite; /* slower scroll */
+  animation-delay: 0s; /* appear immediately on page load */
+  vertical-align: middle; /* aligns text vertically inside container */
+}
+
+
+.space-events {
+  display: flex;
+  gap: 6rem; /* space between each event */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.space-events li {
+  display: inline-block;
+  font-size: 0.95rem;
+  color: #fff;
+  font-weight: 500;
+}
+@keyframes scroll-events {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 60px; /* space for the footer height */
+}
+
+/* Footer stays at bottom */
+.dashboard-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px; /* same as padding-bottom in wrapper */
+  color: #bbb;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 3rem 0; 
+  background: rgba(0, 0, 20, 0.85);
+  color: #a1c4fd;
+  border-top: 1px solid rgba(100, 150, 255, 0.3);
+  backdrop-filter: blur(8px);
+
+}
+
+.nav-link.active {
+  color: #00d2ff !important;
+  text-shadow: 
+    0 0 10px #00d2ff,
+    0 0 20px #00aaff;
+  font-weight: 700;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00d2ff, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px #00d2ff;
+}
+
+@media (max-width: 991.98px) {
+  .dashboard-main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Full width for both columns on mobile */
+  .dashboard-top-left,
+  .dashboard-right,
+  .dashboard-chart-card,
+  #tempChartCard,
+  .dashboard-orbit-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Fix the right-top flex (temp chart + orbit) to stack on very small screens */
+  .dashboard-right .right-top {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Make orbit animation smaller and centered */
+  .orbit-animation {
+    transform: scale(0.75);
+    margin: 0 auto;
+  }
+
+  /* Three small cards stack full-width */
+  .dashboard-totals {
+    flex-direction: column;
+    align-items: center;
+  }
+  .dashboard-totals .card {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  /* Reduce huge top padding on mobile */
+  .dashboard-container {
+    padding: 6rem 1rem 2rem 1rem;
+  }
+
+  /* Live events readable */
+  .space-events li {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .dashboard-chart-card canvas {
+    height: 380px !important;   /* give it a real height instead of 100% */
+    max-height: none !important;
+  }
+}
+
+/* FINAL RESPONSIVE CHARTS – perfect on every device */
+/* Mobile & tablet */
+#planetChart,
+#tempChart {
+  height: 380px !important;           /* nice height on phones */
+  object-fit: contain;                /* never stretched, always round bubbles */
+}
+
+/* Desktop only – bring back your original beautiful heights */
+@media (min-width: 992px) {
+  #planetChart  { height: 380px !important; }   /* or 350px if you prefer */
+  #tempChart    { height: 300px !important; }   /* ← this stops the “cramped to top” */
+}
+@media (max-width: 950px) {
+  .dashboard-totals .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* GLOSSY GLASSMORPHISM EFFECT FOR ALL CARDS */
+
+.dashboard-totals .card {
+  background: rgba(2, 5, 23, 0.61) !important;          /* Deep space blue with transparency */
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1.5px solid rgba(120, 140, 255, 0.25) !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(100, 80, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;   /* Inner top highlight */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+/* Subtle shine highlight (the "glossy" moving light) */
+.dashboard-totals .card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.08), 
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.8s;
+  pointer-events: none;
+}
+
+/* Shine moves on hover */
+.totals .card:hover::before {
+  left: 100%;
+}
+
+/* Extra glow on hover */
+.totals .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(120, 100, 255, 0.4) !important;
+  border-color: rgba(150, 170, 255, 0.5) !important;
+}
+
+.totals .card {
+  color: #e0e8ff !important;                 /* Light blue-white text */
+  text-align: center;
+}
+
+.dashboard-totals .card .card-title {
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: #4273d5 !important;
+  text-shadow: 0 0 10px rgba(72, 105, 181, 0.6) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.dashboard-totals .card .card-text,
+.dashboard-totals .card p.display-4 {
+  font-size: 1.2rem !important;              /* Huge number */
+  font-weight: 900 !important;
+  background: linear-gradient(135deg, #7e90ff, #c0d8ff, #7ef3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 
+    0 0 20px rgba(120, 180, 255, 0.7),
+    0 0 40px rgba(100, 150, 255, 0.4) !important;
+  margin: 0 !important;
+}
+
+/* Fix: Bring back bubble chart tooltips on hover */
+.dashboard-chart-card::before {
+  pointer-events: none !important;   /* ← this lets mouse clicks pass through the shine layer */
+  z-index: 0 !important;             /* ← keeps it behind the canvas */
+}
+
+/* Make sure the canvas itself can receive hover */
+#planetChart {
+  position: relative;
+  z-index: 1 !important;
+  pointer-events: auto !important;
+}
+
+.dashboard-chart-card, 
+.dashboard-orbit-card {
+  background-color: rgba(56, 65, 117, 0.61);
+  backdrop-filter: blur(16px) saturate(180%)
+}
+
+body.dark-mode .dashboard-orbit-card {
+  background-color: rgba(20, 20, 40, 0.85); /* darker background */
+  border: 1px solid rgba(100, 150, 255, 0.2); /* softer border */
+  backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* Dark mode planets (optional: make glows more visible) */
+body.dark-mode .orbit-animation .planet {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* subtle glow for visibility */
+}
+
+/* Dark mode Sun */
+body.dark-mode .sun {
+  box-shadow: 0 0 20px #FFD700;
+}
+
+/* If you have orbit lines (optional) */
+body.dark-mode .orbit {
+  border: 1px solid rgba(255,255,255,0.1);
+}

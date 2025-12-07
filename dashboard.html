@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXN | Solar System Explorer</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+
+    /* Bubble Chart Neon Glow */
+    #planetChart {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+      padding: 10px;
+    }
+
+    /* Smooth Float Animation */
+    @keyframes bubbleFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="main-navbar">
+  <!-- STARFIELD CANVAS -->
+<canvas id="starfield" class="position-absolute top-0 start-0 w-100 h-100"></canvas>
+
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+   <a class="navbar-brand d-flex align-items-center" href="#">
+  <img src="images/logo.jpeg" width="60" height="60" class="me-2">
+  <span class="navbar-title">AXN SOLAR SYSTEM EXPLORER - DASHBOARD</span>
+</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link active" href="dashboard.html">Dashboard</a>
+        </li>
+
+        <!-- Explore Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-bs-toggle="dropdown">
+            Explore
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="exploreDropdown">
+            <li><a class="dropdown-item" href="planets.html">Planets</a></li>
+            <li><a class="dropdown-item" href="fun.html">Fun Facts</a></li>
+          </ul>
+        </li>
+
+        <!-- Fun Fact -->
+        <li class="nav-item">
+          <a class="nav-link" href="star.html">Constellation</a>
+        </li>
+
+        <!-- About -->
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+
+        <!-- Logout -->
+        <li class="nav-item">
+          <a class="nav-link" href="quote.html">Logout</a>
+        </li>
+
+        <!-- Dark Mode Toggle -->
+        <li class="nav-item d-flex align-items-center ms-3">
+          <input type="checkbox" id="toggle-dark-navbar">
+          <label for="toggle-dark-navbar" class="toggle-label">
+            <span class="toggle-icon">☀️</span>
+            <span class="trail-container"></span>
+          </label>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+ <div class="page-wrapper">
+  <!-- Dashboard Content -->
+<div class="container dashboard-container">
+
+<div class="dashboard-main">
+  <!-- Top row -->
+  <div class="dashboard-top-left">
+    <div class="card shadow p-4 dashboard-chart-card">
+      <h4 class="chart-title">Planet Size Comparison</h4>
+      <canvas id="planetChart" class="w-100 h-auto"></canvas>
+    </div>
+
+    <!-- Three total cards under the bubble chart -->
+    <div class="dashboard-totals d-flex gap-3 mt-3 flex-wrap">
+      <div class="card text-center shadow mb-3 flex-fill">
+        <div class="card-body">
+          <h5 class="card-title">Total Planets</h5>
+          <p class="card-text display-6">8</p>
+        </div>
+      </div>
+      <div class="card text-center shadow mb-3 flex-fill">
+        <div class="card-body">
+          <h5 class="card-title">Total Moons</h5>
+          <p class="card-text display-6">200+</p>
+        </div>
+      </div>
+      <div class="card text-center shadow mb-3 flex-fill">
+        <div class="card-body">
+          <h5 class="card-title">Solar System</h5>
+          <p class="card-text display-6">The Milky Way</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top right: temp chart + solar system orbit -->
+<div class="dashboard-right">
+  <div class="right-top">
+    <div id="tempChartCard" class="dashboard-chart-card">
+      <h3 class="chart-title">Planet Temperature Comparison</h3>
+     <canvas id="tempChart" class="w-100" style="height:300px;"></canvas>
+    </div>
+    <div class="dashboard-orbit-card">
+    <h3 class="chart-title">Planet Motion Overview</h3> 
+<div class="orbit-animation">
+  <div class="sun"></div>
+
+  <div class="orbit" style="animation-duration: 6s;">
+    <div class="planet planet1"></div>
+  </div>
+
+  <div class="orbit" style="animation-duration: 10s;">
+    <div class="planet planet2"></div>
+  </div>
+
+  <div class="orbit" style="animation-duration: 14s;">
+    <div class="planet planet3"></div>
+  </div>
+</div>
+</div>
+</div>
+
+  <!-- Bottom row: latest space events -->
+<div class="live-event-container">
+  <h5 class="live-event-title">LIVE SPACE EVENTS</h5>
+  <div class="live-event">
+    <div class="space-events-wrapper">
+      <ul class="space-events">
+       <li>🚀 SpaceX successfully launches new satellite into orbit around Earth</li>
+        <li>🌑 Total lunar eclipse visible tonight across several continents</li>
+        <li>☄️ Comet Zeta passes close to Earth, visible with binoculars</li>
+        <li>🛰️ James Webb telescope captures stunning new images of an exoplanet</li>
+        <li>🌌 Milky Way center imaged in infrared, revealing new star formations</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="dashboard-footer text-center mt-4 py-3">
+  <p>© 2025, Created By SYAZWAN AQIM AND AHMAD NAQIU DINIE. All Right Reserved. Google Chrome. 1920X1080. Created On December 2025.</p>
+</footer>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Chart.js -->
+  
+
+  <!-- Bubble Chart Script -->
+  <script>
+    const ctx = document.getElementById('planetChart').getContext('2d');
+
+    const planetData = {
+      labels: ['Mercury','Venus','Earth','Mars','Jupiter','Saturn','Uranus','Neptune'],
+      datasets: [{
+        label: 'Planet Sizes',
+        data: [
+          { x: 10, y: 10, r: 5 },     // Mercury
+          { x: 20, y: 18, r: 12 },    // Venus
+          { x: 30, y: 25, r: 13 },    // Earth
+          { x: 40, y: 12, r: 7 },     // Mars
+          { x: 50, y: 40, r: 40 },    // Jupiter
+          { x: 60, y: 32, r: 35 },    // Saturn
+          { x: 70, y: 22, r: 18 },    // Uranus
+          { x: 80, y: 28, r: 17 }     // Neptune
+        ],
+        backgroundColor: [
+          'rgba(200,200,200,0.8)',
+          'rgba(255,220,120,0.8)',
+          'rgba(80,160,255,0.8)',
+          'rgba(210,80,40,0.8)',
+          'rgba(255,200,50,0.8)',
+          'rgba(255,230,170,0.8)',
+          'rgba(150,255,235,0.8)',
+          'rgba(90,140,255,0.8)'
+        ],
+        borderWidth: 2,
+        borderColor: '#ffffff'
+      }]
+    };
+
+    const bubbleChart = new Chart(ctx, {
+      type: 'bubble',
+      data: planetData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, color: '#fff', font: { size: 20 } },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.label}: ${ctx.raw.r * 1000} km diameter`
+            }
+          }
+        },
+        animation: {
+          duration: 2000,
+          easing: 'easeInOutQuad'
+        },
+        scales: {
+          x: { display: false, min: 0, max: 100 },
+          y: { display: false, min: 0, max: 50 }
+        }
+      }
+    });
+  </script>
+
+  <!-- Custom JS -->
+  <script src="js/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

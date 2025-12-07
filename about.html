@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXN | Solar System Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> 
+     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+
+    <canvas id="starfield"></canvas>
+
+   <!-- ====================== NAVBAR ====================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="main-navbar">
+    <!-- STARFIELD CANVAS (behind everything) -->
+    <canvas id="starfield" class="position-absolute top-0 start-0 w-100 h-100"></canvas>
+
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="images/logo.jpeg" width="60" height="60" class="me-2">
+  <span class="navbar-title">AXN SOLAR SYSTEM EXPLORER - ABOUT PAGE</span>
+</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Dashboard</a>
+        </li>
+
+        <!-- Explore Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-bs-toggle="dropdown">
+            Explore
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="exploreDropdown">
+            <li><a class="dropdown-item" href="planets.html">Planets</a></li>
+            <li><a class="dropdown-item" href="fun.html">Fun Facts</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="star.html">Constellation</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="about.html">About</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="quote.html">Logout</a>
+        </li>
+
+        <!-- Dark Mode Toggle -->
+        <li class="nav-item d-flex align-items-center ms-3">
+          <input type="checkbox" id="toggle-dark-navbar">
+          <label for="toggle-dark-navbar" class="toggle-label">
+            <span class="toggle-icon">☀️</span>
+            <span class="trail-container"></span>
+          </label>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <main>
+        <section class="hero-section fade-in">
+            <h1>AXN SOLAR SYSTEM EXPLORER</h1>
+            <p class="subtitle">Bridging the gap between peoples and the stars.</p>
+        </section>
+
+        <section class="mission-vision-wrapper fade-in">
+            
+            <div class="info-box">
+                <h2>Mission</h2>
+                <p>
+                     The Solar System Explorer is designed to discover the vast neighborhood we live in. 
+                     From planet Mercury to the icy winds of Neptune, we provide an interactive 
+                     journey through our website.
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h2>Vision</h2>
+                <p>
+                    To create a future where the wonders of the universe are accessible to everyone. 
+                    We envision a global culture of curiosity, where understanding our place in space 
+                    inspires the next generation of explorers.
+                </p>
+            </div>
+
+        </section>
+
+        <section class="objectives-section">
+            <h2 class="section-title fade-in">Objectives</h2>
+            
+            <div class="cards-container">
+                
+                <div class="objective-card hidden">
+                    <i class="fa-solid fa-graduation-cap icon"></i>
+                    <h3>Educate</h3>
+                    <p>To provide accurate, up-to-date scientific data about planetary bodies.</p>
+                </div>
+
+                <div class="objective-card hidden">
+                    <i class="fa-solid fa-eye icon"></i>
+                    <h3>Visualize</h3>
+                    <p>To render the scale and beauty of the solar system using high-definition imagery.</p>
+                </div>
+
+                <div class="objective-card hidden">
+                    <i class="fa-solid fa-rocket icon"></i>
+                    <h3>Inspire</h3>
+                    <p>To ignite curiosity about space exploration and the future of humanity.</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="classic-footer">
+  <p>© 2025, Created By SYAZWAN AQIM AND AHMAD NAQIU DINIE. All Right Reserved. Google Chrome. 1920X1080. Created On December 2025.</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/about.js"></script>
+</body>
+</html>

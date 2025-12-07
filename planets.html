@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXN | Solar System Explorer</title>
+  <link rel="icon" href="images/logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="css/planets.css">
+</head>
+<body class="planet">
+
+ <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="main-navbar">
+  <!-- STARFIELD CANVAS -->
+<canvas id="starfield" class="position-absolute top-0 start-0 w-100 h-100"></canvas>
+
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+       <img src="images/logo.jpeg" width="60" height="60" class="me-2">
+  <span class="navbar-title">AXN SOLAR SYSTEM EXPLORER - PLANETS</span>
+</a>
+
+   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" aria-controls="navbarNav" 
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- THIS DIV COLLAPSES ON MOBILE -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Dashboard</a>
+        </li>
+
+        <!-- Explore Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exploreDropdown" role="button" data-bs-toggle="dropdown">
+            Explore
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="exploreDropdown">
+            <li><a class="dropdown-item active" href="planets.html">Planets</a></li>
+            <li><a class="dropdown-item" href="fun.html">Fun Facts</a></li>
+          </ul>
+        </li>
+
+        <!-- Fun Fact -->
+        <li class="nav-item">
+          <a class="nav-link" href="star.html">Constellation</a>
+        </li>
+
+        <!-- About -->
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+
+        <!-- Logout -->
+        <li class="nav-item">
+          <a class="nav-link" href="quote.html">Logout</a>
+        </li>
+
+        <!-- Dark Mode Toggle -->
+        <li class="nav-item d-flex align-items-center ms-3">
+          <input type="checkbox" id="toggle-dark-navbar">
+          <label for="toggle-dark-navbar" class="toggle-label">
+            <span class="toggle-icon">☀️</span>
+            <span class="trail-container"></span>
+          </label>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Title + instruction centered at the top -->
+  <div class="text-center title-down">
+    <h1 style="font-size: 3rem; color: #00ffff; text-shadow: 0 0 25px rgba(0,255,255,0.6);">
+      PLANET OF THE SOLAR SYSTEM
+    </h1>
+    <p style="color: #54b6ddee; font-size: 1rem;">
+      Hover your mouse or click a planet name to learn about the planet
+    </p>
+  </div>
+
+  <div class="container-fluid mt-4">
+    <div class="row g-4 justify-content-center align-items-start" style="min-height: calc(100vh - 220px);">
+
+      <!-- LEFT: Inner planets (Mercury → Mars) -->
+      <div class="col-lg-3 col-md-4 col-12">
+        <ul class="list-group planet-list left-list">
+          <li class="list-group-item planet-item" data-planet="mercury">
+            Mercury
+            <div class="planet-info left-info">
+              <h4>Mercury</h4>
+              <p>Diameter: 4,879 km • 0.39 AU</p>
+              <p>Smallest planet • No atmosphere</p>
+            </div>
+          </li>
+          <li class="list-group-item planet-item" data-planet="venus">
+            Venus
+            <div class="planet-info left-info">
+              <h4>Venus</h4>
+              <p>Diameter: 12,104 km • 0.72 AU</p>
+              <p>Hottest planet • Thick CO₂ clouds</p>
+            </div>
+          </li>
+          <li class="list-group-item planet-item" data-planet="earth">
+            Earth
+            <div class="planet-info left-info">
+              <h4>Earth</h4>
+              <p>Diameter: 12,742 km • 1 AU</p>
+              <p>Our home • Only known life</p>
+            </div>
+          </li>
+          <li class="list-group-item planet-item" data-planet="mars">
+            Mars
+            <div class="planet-info left-info">
+              <h4>Mars</h4>
+              <p>Diameter: 6,779 km • 1.52 AU</p>
+              <p>The Red Planet • Possible past water</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+<div class="col-lg-4 col-md-4 col-12">
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="solar-system-wrapper">
+      <div class="solar-system">
+        <div class="sun">
+          <video src="videos/sun.webm" autoplay loop muted playsinline></video>
+        </div>
+<div class="orbit orbit-1" data-planet="mercury">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/mercury.png" alt="Mercury">
+  </div>
+</div>
+<div class="orbit orbit-2" data-planet="venus">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/venus.png" alt="Venus">
+  </div>
+</div>
+<div class="orbit orbit-3" data-planet="earth">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/earth.png" alt="Earth">
+  </div>
+</div>
+<div class="orbit orbit-4" data-planet="mars">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/mars.png" alt="Mars">
+  </div>
+</div>
+<div class="orbit orbit-5" data-planet="jupiter">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/jupiter.png" alt="Jupiter">
+  </div>
+</div>
+<div class="orbit orbit-6" data-planet="saturn">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/saturn.png" alt="Saturn">
+  </div>
+</div>
+<div class="orbit orbit-7" data-planet="uranus">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/uranus.png" alt="Uranus">
+  </div>
+</div>
+<div class="orbit orbit-8" data-planet="neptune">
+  <div class="planet-wrapper">
+    <img class="planet-image" src="images/neptune.png" alt="Neptune">
+  </div>
+</div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+      <!-- RIGHT: Outer planets (Jupiter → Neptune) -->
+      <div class="col-lg-3 col-md-4 col-12">
+        <ul class="list-group planet-list right-list">
+          <li class="list-group-item planet-item" data-planet="jupiter">
+            Jupiter
+            <div class="planet-info right-info">
+              <h4>Jupiter</h4>
+              <p>Diameter: 139,820 km • 5.2 AU</p>
+              <p>Largest planet • Great Red Spot</p>
+            </div>
+          </li>
+          <li class="list-group-item planet-item" data-planet="saturn">
+            Saturn
+            <div class="planet-info right-info">
+              <h4>Saturn</h4>
+              <p>Diameter: 116,460 km • 9.58 AU</p>
+              <p>Stunning rings of ice & rock</p>
+            </div>
+          </li>
+          <li class="list-group-item planet-item" data-planet="uranus">
+            Uranus
+            <div class="planet-info right-info">
+              <h4>Uranus</h4>
+              <p>Diameter: 50,724 km • 19.2 AU</p>
+              <p>Rotates on its side • Faint rings</p>
+            </div>
+          </li>
+          <li class="list-group-item planet-item" data-planet="neptune">
+            Neptune
+            <div class="planet-info right-info">
+              <h4>Neptune</h4>
+              <p>Diameter: 49,244 km • 30.05 AU</p>
+              <p>Fastest winds • Deep blue</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+<div class="container py-4 mt-0 mb-5">                          <!-- ← changed here -->
+  <div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-9 col-md-6 col-11 mx-auto rounded-4 shadow-glow">  <!-- this makes it nice and compact -->
+      <h2 class="text-center mb-5" style="color: #00ffff; text-shadow: 0 0 20px rgba(0,255,255,0.6);">
+        Average Distance from the Sun (AU)
+      </h2>
+
+      <div class="distance-graph">
+        <div class="bar mercury"   style="height: 8px;"   data-au="0.39"></div>
+        <div class="bar venus"     style="height: 18px;"  data-au="0.72"></div>
+        <div class="bar earth"     style="height: 25px;"  data-au="1.00"></div>
+        <div class="bar mars"      style="height: 38px;"  data-au="1.52"></div>
+        <div class="bar jupiter"   style="height: 80px;"  data-au="5.20"></div>
+        <div class="bar saturn"    style="height: 110px;" data-au="9.58"></div>
+        <div class="bar uranus"    style="height: 160px;" data-au="19.2"></div>
+        <div class="bar neptune"   style="height: 200px;" data-au="30.1"></div>
+      </div>
+
+      <div class="graph-labels d-flex justify-content-between mt-3 text-cyan">
+        <span>Mercury<br>0.39 AU</span>
+        <span>Venus<br>0.72 AU</span>
+        <span>Earth<br>1 AU</span>
+        <span>Mars<br>1.52 AU</span>
+        <span>Jupiter<br>5.2 AU</span>
+        <span>Saturn<br>9.6 AU</span>
+        <span>Uranus<br>19.2 AU</span>
+        <span>Neptune<br>30.1 AU</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="page-footer text-center py-3" style="width: 100%; background-color: #111; color: #fff;">
+  <p>© 2025, Created By SYAZWAN AQIM AND AHMAD NAQIU DINIE. All Right Reserved. Google Chrome. 1920X1080. Created On December 2025.</p>
+</footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

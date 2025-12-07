@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="main-navbar">
+  <div class="container-fluid">
+    <!-- Logo and Title -->
+    <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+      <img src="images/logo.png" alt="Logo" width="40" height="40" class="me-2">
+      Solar System Explorer
+    </a>
+
+    <!-- Hamburger for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="planets.html">Explore</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html">Logout</a></li>
+        <li class="nav-item d-flex align-items-center ms-3">
+          <input type="checkbox" class="form-check-input" id="toggle-dark-navbar">
+          <label class="form-check-label text-light ms-1" for="toggle-dark-navbar">Dark Mode</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Optional: Starfield canvas for background animation -->
+<canvas id="starfield"></canvas>

@@ -1,0 +1,557 @@
+/* ==================== FUN.CSS – FINAL VERSION ==================== */
+
+body, html {
+  height: 100%;
+  margin: 0;
+  background: #000;                    /* Deep space black */
+  color: #fff;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url(../images/img4.jpg);
+  background-size: 100% auto;
+}
+
+/* Real canvas starfield is behind everything */
+#starfield {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;                          /* Behind navbar & content */
+  pointer-events: none;
+}
+
+
+@font-face {
+    font-family:"Syncopate-Bold";
+    src: url(../font/Syncopate-Bold.ttf);
+}
+.navbar-nav {
+  display: flex !important;                /* ensure flex layout */
+  gap: 1rem !important;                    /* space between items */
+  font-family: 'Syncopate-Bold', sans-serif !important;  /* your custom font */
+  font-size: 12px !important; 
+
+}
+.navbar-title {
+  font-family: 'Syncopate-Bold', sans-serif !important; /* your font */
+  font-size: 12px !important;                          /* adjust size */
+  letter-spacing: 1px;                                   /* optional spacing between letters */
+}
+
+
+/* Page content sits above the starfield */
+.funfact-container {
+  min-height: 20vh;
+  padding: 120px 1rem 4rem;   /* top padding for fixed navbar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;                  /* space between sections */
+}
+
+.fact-card {
+  background: rgba(10, 20, 50, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 2.5rem 3rem;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+}
+
+/* Re-enable pointer events only on interactive parts */
+.fact-card, .nebula-btn, #fact-counter {
+  pointer-events: auto;
+}
+
+#fact-counter {
+  position: fixed;
+  top: 90px;                           /* Below navbar */
+  right: 30px;
+  opacity: 0.6;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  z-index: 10;
+  background: rgba(0,0,0,0.4);
+  padding: 6px 12px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.fact-card {
+  background: rgba(10, 20, 50, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(100, 180, 255, 0.215);
+  border-radius: 28px;
+  padding: 1.5rem 1.5rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 
+    0 0 50px rgba(100, 180, 255, 0.119),
+    inset 0 0 30px rgba(100, 180, 255, 0.1);
+  animation: fadeInScale 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: auto;
+}
+
+.fact-text {
+  font-size: 2.6rem;
+  line-height: 1.45;
+  margin-bottom: 3rem;
+  text-shadow: 
+    0 0 20px rgba(100, 220, 255, 0.7),
+    0 0 40px rgba(100, 220, 255, 0.3);
+  opacity: 0;
+  animation: textFadeIn 0.8s ease-out 0.6s forwards;
+}
+
+.nebula-btn {
+  background: linear-gradient(45deg, #6e00ff, #0099ff, #00d0ff);
+  background-size: 200% 200%;
+  border: none;
+  padding: 1.1rem 3.2rem;
+  border-radius: 60px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 35px rgba(110, 0, 255, 0.7);
+  transition: all 0.4s ease;
+  animation: gradientShift 8s ease infinite, pulse 4s infinite;
+}
+
+.nebula-btn:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 10px 50px rgba(0, 208, 255, 0.9);
+}
+
+.nebula-btn:active {
+  transform: translateY(0) scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.85) translateY(30px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 35px rgba(110, 0, 255, 0.7); }
+  50%      { box-shadow: 0 0 60px rgba(0, 208, 255, 0.95); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .fact-text { font-size: 1.9rem; margin-bottom: 2.5rem; }
+  .fact-card { padding: 2.5rem 1.5rem; }
+  .nebula-btn { padding: 1rem 2.5rem; font-size: 1.25rem; }
+  #fact-counter { top: 80px; font-size: 1rem; right: 15px; }
+}
+
+@media (max-width: 480px) {
+  .fact-text { font-size: 1.6rem; }
+  .nebula-btn { padding: 0.9rem 2rem; font-size: 1.15rem; }
+}
+body.dark-mode {
+  background: #0000008a !important;
+  color: #e0f0ff;
+}
+
+body.dark-mode .fact-card {
+  background: rgba(0, 0, 0, 0.573);
+  border-color: rgba(80, 140, 255, 0.6);
+  box-shadow: 0 0 50px rgba(80, 140, 255, 0.5);
+}
+
+body.dark-mode .fact-text {
+  text-shadow: 0 0 25px rgba(80, 180, 255, 0.9);
+}
+
+body.dark-mode .nebula-btn {
+  background: linear-gradient(45deg, #8b00ff, #00e0ff);
+  box-shadow: 0 0 40px rgba(0, 234, 255, 0.8);
+}
+
+body.dark-mode .nebula-btn:hover {
+  box-shadow: 0 10px 60px rgba(0, 255, 255, 0.95);
+}
+
+body.dark-mode #fact-counter {
+  background: rgba(0, 30, 80, 0.6);
+  color: #aaddff;
+}
+
+.nav-item.dropdown:has(.dropdown-item.active) > .dropdown-toggle {
+  color: #00d2ff !important;
+  text-shadow: 0 0 15px #00d2ff, 0 0 30px #0088ff;
+  font-weight: 700;
+}
+
+.nav-item.dropdown:has(.dropdown-item.active) > .dropdown-toggle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00d2ff, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 12px #00d2ff;
+}
+
+.chart-title { text-align: center; color: #00ffff; text-shadow: 0 0 20px #00ffff; margin-bottom: 2rem; }
+
+/* ——————— CYAN TIMELINE INFOGRAPHIC ——————— */
+.timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  background: linear-gradient(to bottom, transparent, #00ffff, transparent);
+  top: 0; bottom: 0; left: 50%;
+  margin-left: -2px;
+  box-shadow: 0 0 20px #00ffff;
+}
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  width: 50%;
+}
+.timeline-item:nth-child(odd) { left: 0; }
+.timeline-item:nth-child(even) { left: 50%; }
+.timeline-dot {
+  position: absolute;
+  width: 20px; height: 20px;
+  background: #00ffff;
+  border-radius: 50%;
+  top: 18px;
+  box-shadow: 0 0 30px #00ffff;
+}
+.timeline-item:nth-child(odd) .timeline-dot { right: -10px; }
+.timeline-item:nth-child(even) .timeline-dot { left: -10px; }
+.timeline-content {
+  padding: 1.5rem;
+  background: rgba(10, 20, 60, 0.9);
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+  transition: all 0.4s ease;
+}
+.timeline-content:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+}
+.timeline-content h3 {
+  color: #00ffff;
+  text-shadow: 0 0 15px #00ffff;
+  margin: 0 0 0.5rem 0;
+}
+.timeline-content p { margin: 0; color: #a0f7ff; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .timeline::after { left: 31px; }
+  .timeline-item { width: 100%; padding-left: 70px; padding-right: 20px; left: 0 !important; }
+  .timeline-dot { left: 21px; }
+}
+
+#fact-text {
+  font-size: 1.65rem !important;     /* Perfect elegant size on desktop */
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+  text-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+  transition: all 0.5s ease;
+  margin: 0;
+}
+
+/* Optional: subtle pulse when new fact appears */
+#fact-text.revealed {
+  text-shadow: 0 0 18px #00ffff, 0 0 30px #00ffff;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  #fact-text {
+    font-size: 1.55rem !important;
+  }
+}
+
+/* Phone – still perfectly readable but compact */
+@media (max-width: 576px) {
+  #fact-text {
+    font-size: 1.4rem !important;
+  }
+}
+
+.fact-card {
+  background: rgba(10, 20, 50, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  max-width: 560px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  
+  /* ←←← THIS STOPS THE CARD FROM GROWING/SHRINKING ←←← */
+  height: 260px;           /* fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ——————— 2. SMALLER, SUBTLE REVEAL TEXT ——————— */
+#fact-text {
+  font-size: 1.5rem !important;     /* small & elegant */
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.4) !important;  /* very soft glow */
+  margin: 0;
+  min-height: 70px;   /* prevents layout shift */
+  display: flex;
+  align-items: center;
+}
+
+/* ——————— 3. SMALLER, CALMER REVEAL BUTTON ——————— */
+#new-fact {
+  font-size: 1rem !important;
+  padding: 0.75rem 2.2rem !important;
+  border-radius: 30px !important;
+  background: rgba(0, 255, 255, 0.15) !important;
+  border: 1px solid rgba(0, 255, 255, 0.3) !important;
+  color: #a0f7ff !important;
+  transition: all 0.3s ease !important;
+}
+#new-fact:hover {
+  background: rgba(0, 255, 255, 0.25) !important;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+/* ——————— 4. SMALLER CHARTS + MUCH SOFTER GLOW ——————— */
+.timeline-section .timeline-content {
+  max-width: 820px !important;          /* smaller charts */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(0, 255, 255, 0.2) !important;
+  background: rgba(10, 20, 50, 0.9) !important;
+}
+
+/* Reduce glow on titles */
+.chart-title,
+.timeline-content h3,
+h2.display-5 {
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.4) !important;
+}
+
+/* Softer infographic cards */
+.info-card,
+.timeline-content {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+.info-card:hover,
+.timeline-content:hover {
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.25) !important;
+  border-color: rgba(0, 255, 255, 0.4) !important;
+}
+
+/* Softer timeline line */
+.timeline::after {
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4) !important;
+}
+
+
+/* Apply to all datasets automatically */
+.chartjs-render-monitor * {
+  border-color: var(--chart-bar-border) !important;
+  background-color: var(--chart-bar-bg) !important;
+}
+
+/* Override specific bright colors in your existing charts (optional but recommended) */
+canvas#orbitalChart,
+canvas#bubbleChart,
+canvas#tempChart,
+canvas#distanceChart {
+  filter: brightness(0.9) contrast(1.1);
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* keeps the chart from forcing infinite height */
+  height: auto;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 380px;
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .chart-container canvas {
+    max-height: 280px;
+  }
+}
+
+/* —————— RESPONSIVE ORBITAL CHART LAYOUT —————— */
+
+.orbital-chart-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: auto;          /* stops infinite height */
+  overflow: hidden;      /* prevents bottom spacing bug */
+}
+
+.orbital-chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 380px;     /* perfect for doughnut charts */
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  .orbital-chart-container {
+    padding: 1rem 1.5rem;  /* slightly smaller padding for phones */
+  }
+  .orbital-chart-container canvas {
+    max-height: 260px;
+    width: calc(100% - 0.5rem);
+  }
+}
+/* —————— ROUNDED & RESPONSIVE ORBITAL CHART CONTAINER —————— */
+
+.orbital-chart-container {
+  width: 100%;
+  max-width: 700px;       /* container stops growing beyond 700px */
+  margin: 0 auto;         /* centers the container */
+  padding: 1.5rem;        /* space inside container for canvas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: auto;
+  overflow: hidden;
+
+  border-radius: 25px;
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  background: rgba(10, 20, 50, 0.85);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+/* Rounded canvas inside */
+.orbital-chart-container canvas {
+  width: calc(100% - 1rem); 
+  height: auto !important;
+  max-height: 380px;
+  border-radius: 20px; /* ← Makes the chart edges rounded */
+    
+}
+
+/* Phones */
+@media (max-width: 780px) {
+  .orbital-chart-container canvas {
+    max-height: 260px;
+    border-radius: 18px;
+  }
+}
+
+#habitability-summary {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.6);  /* semi-transparent background */
+  border-radius: 12px;
+  color: #a0f7ff;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  #habitability-summary {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+.orbital-chart-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: rgba(10, 20, 50, 0.85);
+  border-radius: 25px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orbital-chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 20px;
+}
+
+.chart-summary {
+  margin-top: 1rem;
+  background: rgba(0,0,0,0.6);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  color: #a0f7ff;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 100%;
+}
+
+footer {
+    width: 100%;   
+    text-align: center;
+    padding: 10px 0;         /* ↓ smaller vertical space */
+    font-size: 14px;          /* ↓ smaller text */
+    background: rgba(0, 0, 20, 0.85);
+    color: #a1c4fd;
+    border-top: 1px solid rgba(100, 150, 255, 0.3);
+    backdrop-filter: blur(8px);
+    height: 20px;
+}

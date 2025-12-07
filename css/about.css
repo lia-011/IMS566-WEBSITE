@@ -1,0 +1,580 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Exo 2', sans-serif;
+    background: linear-gradient(to bottom, #000000 0%, #0b0d17 100%);
+    color: #ffffff;
+    min-height: 100vh;     
+    overflow: hidden;    
+    display: flex;       
+    flex-direction: column;
+    background-image: url(../images/img2.jpg);
+    background-size: 100% auto;
+}
+
+#starfield {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;                          /* Behind navbar & content */
+  pointer-events: none;
+}
+
+@font-face {
+    font-family:"Syncopate-Bold";
+    src: url(../font/Syncopate-Bold.ttf);
+}
+.navbar-nav {
+  display: flex !important;                /* ensure flex layout */
+  gap: 1rem !important;                    /* space between items */
+  font-family: 'Syncopate-Bold', sans-serif !important;  /* your custom font */
+  font-size: 12px !important; 
+
+}
+.navbar-title {
+  font-family: 'Syncopate-Bold', sans-serif !important; /* your font */
+  font-size: 12px !important;                          /* adjust size */
+  letter-spacing: 1px;                                   /* optional spacing between letters */
+}
+
+
+.nav-link.active {
+  color: #00d2ff !important;
+  text-shadow: 
+    0 0 10px #00d2ff,
+    0 0 20px #00aaff;
+  font-weight: 700;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00d2ff, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px #00d2ff;
+}
+
+  /* Smooth fade-in */
+  .dropdown-menu {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    display: block;
+    visibility: hidden;
+  }
+  
+  .nav-item.dropdown:hover > .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+/* Starfield inside dropdown + glassy dark look */
+.dropdown-menu {
+  background: rgba(10, 10, 30, 0.85) !important;   /* Deep space color */
+  backdrop-filter: blur(10px);                     /* Glassmorphism */
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  border-radius: 12px;
+  overflow: hidden;                                /* Important for the pseudo-canvas */
+}
+
+/* This creates moving stars inside the dropdown */
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+    radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, #eee, transparent),
+    radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 50px 20px, #fff, transparent),
+    radial-gradient(2px 2px at 80px 60px, #eee, transparent),
+    radial-gradient(1px 1px at 110px 10px, #fff, transparent),
+    radial-gradient(2px 2px at 150px 50px, #eee, transparent),
+    radial-gradient(1px 1px at 180px 80px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: starfieldMove 25s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes starfieldMove {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100px; }
+}
+
+/* Make dropdown items pop */
+.dropdown-item {
+  color: #bbd0ff !important;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(100, 150, 255, 0.25) !important;
+  color: white !important;
+  text-shadow: 0 0 10px rgba(100, 200, 255, 0.8);
+}
+#main-navbar {
+  overflow: visible !important;        /* Crucial */
+  z-index: 1050;                       /* Same as Bootstrap navbar default */
+}
+
+#starfield {
+  z-index: 0;                          /* Behind everything */
+  pointer-events: none;                /* Lets clicks pass through to navbar */
+}
+
+#main-navbar .position-relative,
+#main-navbar a,
+#main-navbar button,
+#main-navbar ul,
+#main-navbar .dropdown-menu {
+  z-index: 10;                         /* Above the canvas */
+}
+
+/* Make sure dropdown appears above canvas */
+.dropdown-menu {
+  z-index: 1060 !important;            /* Higher than navbar */
+
+}#toggle-dark-navbar {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Toggle track */
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  overflow: hidden;
+}
+
+/* Icon (sun/moon) */
+.toggle-icon {
+  position: absolute;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 6px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 4px #ffdd55);
+  pointer-events: none;
+}
+
+/* Comet Trail */
+.toggle-comet {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 10px;
+  height: 4px;
+  background: linear-gradient(to right, rgba(255,255,255,0.7), transparent);
+  transform: translateY(-50%);
+  border-radius: 10px;
+  opacity: 0;
+  transition: all 0.35s ease;
+  filter: drop-shadow(0 0 6px #ffffff);
+}
+
+.trail-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Trail particle */
+.trail-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffd86b;
+  filter: drop-shadow(0 0 6px #ffd86b);
+  animation-fill-mode: forwards;
+}
+
+/* Moon color */
+.trail-particle.moon-mode {
+  background: #00eaff;
+  filter: drop-shadow(0 0 10px #00eaff);
+}
+
+@keyframes comet {
+  0% { transform: translateX(0) translateY(var(--scatter-y)) scale(1); opacity: 1; }
+  100% { transform: translateX(var(--distance, 28px)) translateY(var(--scatter-y)) scale(0.3); opacity: 0; }
+}
+
+/* DARK MODE — move icon to right (moon) */
+#toggle-dark-navbar:checked + .toggle-label .toggle-icon {
+  left: 34px;
+  content: "🌙";
+  filter: drop-shadow(0 0 6px #00eaff) drop-shadow(0 0 12px #00eaff);
+}
+
+/* Comet trail activates */
+#toggle-dark-navbar:checked + .toggle-label .toggle-comet {
+  opacity: 1;
+  width: 26px;
+  left: 8px;
+  background: linear-gradient(to right, rgba(0,255,255,0.8), transparent);
+  filter: drop-shadow(0 0 10px #00ffff);
+  animation: cometMove 0.35s ease forwards;
+}
+
+/* COMET MOVEMENT */
+@keyframes cometMove {
+  0% { transform: translate(-5px, -50%); opacity: 1; }
+  100% { transform: translate(25px, -50%); opacity: 0; }
+}
+
+/* Light mode sun glow */
+#toggle-dark-navbar:not(:checked) + .toggle-label .toggle-icon {
+  filter: drop-shadow(0 0 6px #ffdd55) drop-shadow(0 0 12px #ffcc33);
+}
+
+/* Light mode comet (reverse direction) */
+#toggle-dark-navbar:not(:checked) + .toggle-label .toggle-comet {
+  background: linear-gradient(to right, rgba(255,200,0,0.8), transparent);
+}
+/* Light mode overlay */
+body.light-mode::before,
+body.dark-mode::before {
+  content: "";
+  position: fixed; /* fixed so it covers viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1; /* behind content but above background */
+}
+
+/* Light mode tint */
+body.light-mode::before {
+  background-color: rgba(255,255,255,0.05); /* slight light tint */
+}
+
+/* Dark mode overlay */
+body.dark-mode::before {
+  background-color: rgba(0,0,0,0.7); /* dark overlay */
+}
+body.dark-mode .login-card,
+body.dark-mode .register-card,
+body.dark-mode .dashboard-right .card,
+body.dark-mode .dashboard-chart-card {
+  background: rgba(20,20,20,0.8);
+  color: #fff;
+}
+
+
+/* Fixed top and background */
+#main-navbar {
+  position: relative;           /* Needed for the canvas to be positioned inside */
+  overflow: hidden;             /* Prevents stars from leaking out */
+  background: rgba(0, 0, 20, 0.8); /* fallback color */
+
+}
+  .navbar .dropdown-toggle::after {
+  display: none; /* hides the arrow */
+}
+
+/* Make sure navbar text/links stay on top */
+.navbar-brand,
+.navbar-nav .nav-link,
+.form-check-label {
+  position: relative;
+  z-index: 1;
+}
+
+/* Navbar link hover effect */
+.navbar-nav .nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #58A6FF;
+  text-shadow: 0 0 5px #58A6FF;
+}
+
+/* ---------- NAVBAR ---------- */
+#main-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgb(0, 0, 6) !important;   /* slightly more transparent */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+/* Navbar brand/logo */
+#main-navbar .navbar-brand img {
+  border-radius: 50%;
+}
+
+/* Navbar links */
+#main-navbar .nav-link {
+  position: relative;
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+header {
+    flex-shrink: 0; 
+    padding: 15px 50px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: #00d2ff;
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.7);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+
+main {
+    flex-grow: 1; 
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;     
+    gap: 20px; 
+    padding-top: 50px;
+}
+
+
+.hero-section {
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+    background: linear-gradient(90deg, #ffffff, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #aab2bd;
+}
+
+
+.mission-vision-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 85%;
+    max-width: 1100px;
+}
+
+
+.info-box {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    
+    flex: 1; 
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+    border-color: #00d2ff;
+}
+
+.info-box h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00d2ff;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.info-box p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+}
+
+
+.objectives-section {
+    width: 100%;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+.cards-container {
+    display: flex;
+    justify-content: center; 
+    align-items: stretch;
+    gap: 25px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.objective-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    text-align: center;
+    
+    width: 280px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.objective-card:hover {
+    transform: translateY(-5px);
+    border-color: #00d2ff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.icon {
+    font-size: 2rem;
+    color: #00d2ff;
+    margin-bottom: 15px;
+}
+
+.objective-card h3 {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.objective-card p {
+    color: #ccc;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+
+footer {
+    text-align: center;
+    color: #555;
+    font-size: 0.8rem;
+    padding-bottom: 10px;
+    pointer-events: none;
+}
+
+
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+@media (max-width: 900px) {
+    body {
+        height: auto;
+        overflow-y: auto;
+        display: block;
+    }
+    main {
+        padding: 40px 10px;
+    }
+    .mission-vision-wrapper {
+        flex-direction: column; 
+        width: 95%;
+    }
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .objective-card {
+        width: 100%;
+        max-width: 350px;
+    }
+    footer {
+        margin-top: 30px;
+    }
+}
+
+.classic-footer {
+    width: 100%;   
+    text-align: center;
+    padding: 20px 0;
+    background: rgba(0, 0, 20, 0.85);
+    color: #a1c4fd;
+    border-top: 1px solid rgba(100, 150, 255, 0.3);
+    backdrop-filter: blur(8px); 
+    font-size: 14px;       
+}
+

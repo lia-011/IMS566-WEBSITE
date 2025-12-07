@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXN | Solar System Explorer</title>
+  <link rel="icon" href="images/logo.png">
+  <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="light-mode">
+
+<img src="images/bg2.jpg" id="bg-image" class="bg-image" alt="Background Image">
+
+  <div class="login-container">
+    <div class="card login-card">
+      <h2>SIGN UP HERE</h2>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form">
+        <input type="text" id="reg-username" class="form-control" placeholder="Enter username" required>
+        <input type="password" id="reg-password" class="form-control" placeholder="Enter password" required>
+        <div class="button-container">
+          <button type="submit" class="btn btn-primary">REGISTER</button>
+        </div>
+        <div id="register-msg" class="mt-2"></div>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const registerForm = document.getElementById("register-form");
+    const registerMsg = document.getElementById("register-msg");
+
+    if (registerForm) {
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("reg-username").value.trim();
+        const password = document.getElementById("reg-password").value;
+
+        if (!username || !password) {
+          registerMsg.textContent = "Please fill in all fields.";
+          registerMsg.style.color = "#ff6b6b";
+          return;
+        }
+
+        // Save user credentials
+        localStorage.setItem("registeredUser", username);
+        localStorage.setItem("registeredPass", password);
+
+        registerMsg.textContent = "Registration successful! Taking you to login...";
+
+        // Auto redirect to login page after 1.5 seconds
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2500);
+      });
+    }
+  });
+</script>

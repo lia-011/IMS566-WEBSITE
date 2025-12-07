@@ -1,0 +1,639 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #050510;
+    background-image: url(../images/bg2.jpg);
+    display: flex;
+    flex-direction: column;
+    background-size: cover; /* better than 100% auto */
+    overflow-x: hidden;  /* allow vertical scroll for collapsed menu */
+    overflow-y: auto;    /* enable scroll on mobile */
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* behind navbar */
+    pointer-events: none;
+    object-fit: cover; /* prevents stretching */
+}
+
+@font-face {
+    font-family:"Syncopate-Bold";
+    src: url(../font/Syncopate-Bold.ttf);
+}
+.navbar-nav {
+  display: flex !important;                /* ensure flex layout */
+  gap: 1rem !important;                    /* space between items */
+  font-family: 'Syncopate-Bold', sans-serif !important;  /* your custom font */
+  font-size: 12px !important; 
+
+}
+.navbar-title {
+  font-family: 'Syncopate-Bold', sans-serif !important; /* your font */
+  font-size: 12px !important;                          /* adjust size */
+  letter-spacing: 1px;                                   /* optional spacing between letters */
+}
+
+.nav-link.active {
+  color: #00d2ff !important;
+  text-shadow: 
+    0 0 10px #00d2ff,
+    0 0 20px #00aaff;
+  font-weight: 700;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00d2ff, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px #00d2ff;
+}
+
+/* Smooth fade-in */
+  .dropdown-menu {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    display: block !important;
+    visibility: hidden;
+  }
+  
+  .nav-item.dropdown:hover > .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .dropdown:hover > .dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+#main-navbar,
+.navbar-collapse,
+.navbar-nav,
+.nav-item,
+.dropdown {
+  overflow: visible !important;
+}
+
+/* Starfield inside dropdown + glassy dark look */
+.dropdown-menu {
+  background: rgba(10, 10, 30, 0.85) !important;   /* Deep space color */
+  backdrop-filter: blur(10px);                     /* Glassmorphism */
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  border-radius: 12px;                            /* Important for the pseudo-canvas */
+}
+
+/* This creates moving stars inside the dropdown */
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+    radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, #eee, transparent),
+    radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 50px 20px, #fff, transparent),
+    radial-gradient(2px 2px at 80px 60px, #eee, transparent),
+    radial-gradient(1px 1px at 110px 10px, #fff, transparent),
+    radial-gradient(2px 2px at 150px 50px, #eee, transparent),
+    radial-gradient(1px 1px at 180px 80px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: starfieldMove 25s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes starfieldMove {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100px; }
+}
+
+/* Make dropdown items pop */
+.dropdown-item {
+  color: #bbd0ff !important;
+  transition: all 0.2s ease;
+}
+
+.dropdown:hover > .dropdown-menu {
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item:hover {
+  background: rgba(100, 150, 255, 0.25) !important;
+  color: white !important;
+  text-shadow: 0 0 10px rgba(100, 200, 255, 0.8);
+
+
+}#toggle-dark-navbar {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Toggle track */
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  overflow: hidden;
+}
+
+/* Icon (sun/moon) */
+.toggle-icon {
+  position: absolute;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 6px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 4px #ffdd55);
+  pointer-events: none;
+}
+
+/* Comet Trail */
+.toggle-comet {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 10px;
+  height: 4px;
+  background: linear-gradient(to right, rgba(255,255,255,0.7), transparent);
+  transform: translateY(-50%);
+  border-radius: 10px;
+  opacity: 0;
+  transition: all 0.35s ease;
+  filter: drop-shadow(0 0 6px #ffffff);
+}
+
+.trail-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Trail particle */
+.trail-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffd86b;
+  filter: drop-shadow(0 0 6px #ffd86b);
+  animation-fill-mode: forwards;
+}
+
+/* Moon color */
+.trail-particle.moon-mode {
+  background: #00eaff;
+  filter: drop-shadow(0 0 10px #00eaff);
+}
+
+@keyframes comet {
+  0% { transform: translateX(0) translateY(var(--scatter-y)) scale(1); opacity: 1; }
+  100% { transform: translateX(var(--distance, 28px)) translateY(var(--scatter-y)) scale(0.3); opacity: 0; }
+}
+
+
+/* Light mode tint */
+body.light-mode::before {
+  background-color: rgba(255,255,255,0.05); /* slight light tint */
+}
+
+/* Dark mode overlay */
+body.dark-mode::before {
+  background-color: rgba(0,0,0,0.7); /* dark overlay */
+}
+body.dark-mode .login-card,
+body.dark-mode .register-card,
+body.dark-mode .dashboard-right .card,
+body.dark-mode .dashboard-chart-card {
+  background: rgba(20,20,20,0.8);
+  color: #fff;
+}
+
+
+/* Fixed top and background */
+#main-navbar {
+
+  overflow: hidden;             /* Prevents stars from leaking out */
+  background: rgba(0, 0, 20, 0.8); /* fallback color */
+
+}
+  .navbar .dropdown-toggle::after {
+  display: none; /* hides the arrow */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #58A6FF;
+  text-shadow: 0 0 5px #58A6FF;
+}
+
+
+/* ====================== FIX CONTENT BELOW NAVBAR ====================== */
+/* This is the magic line — pushes everything down so nothing is hidden */
+body {
+    padding-top: 82px;          /* Adjust only if your navbar height changes */
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px;
+    }
+}
+
+/* ====================== REST OF YOUR ORIGINAL STYLES (unchanged) ====================== */
+header {
+    text-align: center;
+    padding: 0.2vh;
+    height: 8vh;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+h1 {
+    font-size: 2vh;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(161, 196, 253, 0.3);
+    margin: 0;
+}
+
+.subtitle {
+    color: #77afd991;
+    font-size: 2.2vh;
+    font-weight: 500;
+    margin-top: 0.1vh;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+/* 2. Push everything down a little more (so title isn’t near navbar) */
+body {
+    padding-top: 100px;    /* was 82px → increase to 100px or 110px */
+}
+
+/* 3. Optional: make header a bit taller so title has more space */
+header {
+    height: 10vh;           /* was 8vh → change to 10vh or 12vh */
+}
+
+.constellation-container {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;           /* ← important */
+    padding-right: 17px;           /* ← space for the scrollbar */
+    width: 100vw;                  /* ← force full width */
+    margin-left: calc(-50vw + 50%); /* ← this removes the invisible wall */
+    padding-left: 5vw;             /* ← your original side spacing */
+    padding-right: calc(5vw + 17px); /* ← keeps scrollbar visible */
+    padding-bottom: 120px;
+}
+
+/* Make sure the scrollbar doesn’t cut content */
+.constellation-grid {
+    width: 100%;
+    max-width: none !important;
+    margin: 0 auto;
+    padding: 0 2vw;
+}
+
+/* Webkit (Chrome, Edge, Safari) — glowing comet */
+.constellation-container::-webkit-scrollbar {
+    width: 12px;
+}
+.constellation-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+.constellation-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(transparent, #00eaff, transparent);
+}
+
+.constellation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3vh 3vw;
+    padding: 1vh 0;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    background: rgba(5, 10, 30, 0.6) !important;   /* darker tint */
+    border: 1px solid rgba(100, 180, 255, 0.5);
+    backdrop-filter: blur(14px) brightness(0.9);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(0, 100, 255, 0.2);
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    border-color: rgba(161, 196, 253, 0.5);
+    box-shadow: 0 0 15px rgba(161, 196, 253, 0.2);
+}
+
+.visual-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    width: 100%;
+    height: 100%;
+    padding: 3rem;
+}
+
+.card:hover .visual-content {
+    transform: scale(0.9);
+    opacity: 0.1;
+    filter: blur(2px);
+}
+
+.card h2 {
+    margin-bottom: 0.5vh;
+    font-size: 2.2vh;
+    color: #aca9b7;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.constellation-svg {
+    width: auto;
+    height: 90%;
+    max-width: 100%;
+    max-height: 85%;
+}
+
+.star { fill: #fff; transition: all 0.3s ease; }
+.connection-line {
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    transition: all 0.3s ease;
+}
+
+.info-card {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 5, 25, 0.95) !important;
+    padding: 1vh 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease-in-out;
+    text-align: left;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(100, 200, 255, 0.4);
+}
+
+.card:hover .info-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.info-card h3 {
+    color: #a1c4fd;
+    margin-bottom: 0.5vh;
+    font-size: 3.5vh;
+    border-bottom: 1px solid rgba(161, 196, 253, 0.3);
+    padding-bottom: 0.2vh;
+    text-shadow: 0 0 15px rgba(100, 200, 255, 0.8);
+}
+
+.info-section {
+    font-size: 2.5vh;
+    color: #ccc;
+    line-height: 1.25;
+}
+
+.info-section strong {
+    color: #fff;
+    display: block;
+    margin-top: 0.3vh;
+}
+.star {
+    fill: #ffffff;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+/* Make some stars twinkle at different speeds for realism */
+.star:nth-child(1) { animation-delay: 0s; }
+.star:nth-child(2) { animation-delay: 0.5s; }
+.star:nth-child(3) { animation-delay: 1.2s; }
+.star:nth-child(4) { animation-delay: 2s; }
+.star:nth-child(5) { animation-delay: 0.8s; }
+.star:nth-child(6) { animation-delay: 1.8s; }
+.star:nth-child(7) { animation-delay: 2.7s; }
+
+/* Special bright stars (like Antares, Rigel, etc.) glow stronger */
+.star.antares,
+.card:hover .star {
+    animation: brightTwinkle 3s ease-in-out infinite;
+}
+
+/* MAIN TWINKLE ANIMATION */
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 0.8; 
+        fill: #ffffff;
+        filter: drop-shadow(0 0 4px #ffffff);
+    }
+    50% { 
+        opacity: 1; 
+        fill: #a0e8ff;
+        filter: drop-shadow(0 0 12px #00ccff);
+    }
+}
+
+/* BRIGHTER STARS (Antares, etc.) */
+@keyframes brightTwinkle {
+    0%, 100% { 
+        opacity: 0.9; 
+        fill: #ff9999;
+        filter: drop-shadow(0 0 6px #ff6666);
+    }
+    50% { 
+        opacity: 1; 
+        fill: #ffcccc;
+        filter: drop-shadow(0 0 20px #ff3333);
+    }
+}
+.card .star:nth-child(1),
+.card .star:nth-child(3),
+.card .star:nth-child(5) {
+    fill: #ff9999;
+    animation: redTwinkle 3.5s ease-in-out infinite;
+}
+
+/* Different delays so they don’t all blink at the same time */
+.card .star:nth-child(1) { animation-delay: 0s; }
+.card .star:nth-child(3) { animation-delay: 1.2s; }
+.card .star:nth-child(5) { animation-delay: 2.1s; }
+
+/* RED TWINKLE ANIMATION (like Antares, Betelgeuse, etc.) */
+@keyframes redTwinkle {
+    0%, 100% {
+        opacity: 0.9;
+        fill: #d25c5c;
+        filter: drop-shadow(0 0 6px #ff6666);
+    }
+    50% {
+        opacity: 1;
+        fill: #c15252;
+        filter: drop-shadow(0 0 20px #c35c5c);
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    header { height: 7vh; padding: 0.2vh; }
+    h1 { font-size: 1.8vh; letter-spacing: 1px; }
+    .subtitle { display: none; }
+    main { padding: 0.5vh 1vw; }
+    .constellation-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 0.8vh 1.5vw;
+        max-height: 100%;
+    }
+    .card h2 { font-size: 1.4vh; margin-bottom: 0.2vh; }
+    .info-card h3 { font-size: 1.3vh; }
+    .info-section { font-size: 1vh; line-height: 1.1; }
+}
+
+.page-footer {
+    width: 100%;   
+    text-align: center;
+    padding: 10px 0;         /* ↓ smaller vertical space */
+    font-size: 14px;          /* ↓ smaller text */
+    background: rgba(0, 0, 20, 0.85);
+    color: #a1c4fd;
+    border-top: 1px solid rgba(100, 150, 255, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+
+body.dark-mode {
+  background: #000 !important;
+  color: #e0f0ff;
+}
+
+body.dark-mode .fact-card {
+  background: rgba(5, 10, 35, 0.85);
+  border-color: rgba(80, 140, 255, 0.6);
+  box-shadow: 0 0 50px rgba(80, 140, 255, 0.5);
+}
+
+body.dark-mode .fact-text {
+  text-shadow: 0 0 25px rgba(80, 180, 255, 0.9);
+}
+
+body.dark-mode .nebula-btn {
+  background: linear-gradient(45deg, #8b00ff, #00e0ff);
+  box-shadow: 0 0 40px rgba(0, 234, 255, 0.8);
+}
+
+body.dark-mode .nebula-btn:hover {
+  box-shadow: 0 10px 60px rgba(0, 255, 255, 0.95);
+}
+
+body.dark-mode #fact-counter {
+  background: rgba(0, 30, 80, 0.6);
+  color: #aaddff;
+}
+#main-navbar {
+    overflow: visible !important;     /* ← THIS IS THE MAIN CULPRIT */
+}
+
+.dropdown-menu {
+    margin-top: 0.5rem !important;     /* small gap so it doesn't touch navbar */
+    z-index: 1070 !important;         /* higher than navbar (1050) and canvas */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Make sure the dropdown doesn't get clipped by parent containers */
+.navbar-collapse,
+.navbar-nav,
+.nav-item {
+    overflow: visible !important;
+}
+
+@media (max-width: 768px) {
+    #main-navbar,
+    .navbar-collapse,
+    .navbar-nav,
+    .nav-item,
+    .dropdown {
+        overflow: visible !important;
+    }
+
+    .collapse.show {
+        display: block !important; /* force visible when toggled */
+    }
+
+    .dropdown-menu {
+        position: static !important; /* so it doesn't get clipped */
+        float: none !important;
+        width: 100% !important;
+        background: rgba(10, 10, 30, 0.95) !important;
+        backdrop-filter: blur(10px);
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+}

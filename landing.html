@@ -1,0 +1,129 @@
+<!-- LANDING PAGE POPUP -->
+<div id="landing-popup" class="landing-popup">
+  <div class="landing-content">
+    <img src="images/logo.jpeg" alt="Logo" class="landing-logo">
+    <h1>WELCOME TO AXN SOLAR SYSTEM EXPLORER WEBSITE</h1>
+    <p>This web application demonstrates an interactive interface where users can explore a simulated solar system. The dashboard provides a clear overview of all planets, their orbits, and key information in a visually engaging way.
+
+Users can navigate through a responsive interface, hover over planets to reveal detailed information, and view data presented through interactive visual elements like charts and graphs. The application is designed to be fully.
+</p>
+    <button id="start-btn">NEXT</button>
+  </div>
+</div>
+
+<style>
+/* POPUP BACKDROP */
+.landing-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,10,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+  animation: fadeIn 0.6s ease;
+  background: 
+    url('images/img1.jpg') center/cover no-repeat,  /* your background image */
+    rgba(0,0,10,0.85);
+}
+
+/* STARFIELD BACKDROP (optional subtle stars) */
+.landing-popup::before {
+  content: "";
+  position: absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 70px 90px, #aaa, transparent),
+    radial-gradient(2px 2px at 150px 50px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: starMove 30s linear infinite;
+  pointer-events: none;
+}
+
+/* MODAL CONTENT */
+.landing-content {
+  position: relative;
+  background: rgba(0,0,30,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 40px 30px;
+  max-width: 600px;
+  width: 90%;
+  color: #a1c4fd;
+  box-shadow: 0 0 50px rgba(0,255,255,0.3);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;   /* stack logo, text, button vertically */
+  align-items: center;      /* center horizontally */
+  text-align: center;       /* center text and button inside */
+
+}
+
+.landing-logo {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.5);
+  text-align: center;
+}
+
+
+.landing-content h1 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.landing-content p {
+  margin-bottom: 25px;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: center;
+}
+#start-btn {
+  padding: 16px 50px;             /* wider & taller */
+  font-size: 1.2rem;              /* slightly larger text */
+  font-weight: bold;               /* bold text */
+  color: #fff;                     /* text color */
+  background: url('images/button-bg.jpg') center/cover no-repeat; /* background image */
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff; /* glowing effect */
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #00ffff;   /* optional: glow text */
+}
+
+#start-btn:hover {
+  box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;  /* stronger glow on hover */
+  transform: scale(1.05);       /* slight zoom effect on hover */
+}
+
+/* STARFIELD ANIMATION */
+@keyframes starMove {
+  from { background-position: 0 0; }
+  to { background-position: 0 200px; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+
+<script>
+document.getElementById('start-btn').addEventListener('click', function() {
+    window.location.href = 'dashboard.html';
+});
+</script>
