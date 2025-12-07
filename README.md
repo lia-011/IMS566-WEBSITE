@@ -1,82 +1,47 @@
-IMS 566 - Advanced Web Design Development and Content Management
+IMS 566 - ADVANCED WEB DESIGN DEVELOPMENT AND CONTENT MANAGEMENT 
+PREPARED BY SYAZWAN AQIM AND AHMAD NAQIU DINIE 
+PREPARED FOR DR. MUHAMMAD ASYRAF BIN WAHI ANUAR
 
-Prepared by: Syazwan Aqim and Ahmad Naqiu Dinie
-Prepared for: Dr. Muhammad Asyraf bin Wahi Anuar
+LIVE WEBSITE LINK :
 
-Live Website Link:
+GITHUB REPOSITORY LINK :
 
-[Insert your live website link here]
+a) PROJECT TITLE : AXN SOLAR SYSTEM EXPLORER
 
-GitHub Repository Link:
+PROJECT DESCRIPTION :
 
-[Insert your repository link here]
+A simple interactive solar system website that lets users explore planets, constellations, fun facts, and basic space information. 
+The website includes animations, a login system, and dark light mode, glowing effects, and a starry background to make the experience 
+more interesting and interactive. The goal of this project is to make learning about space easy, visual, and enjoyable for everyone.
 
-a) Project Title
+b) FEATURES INCLUDED : 
 
-AXN Solar System Explorer
+-User login and register system 
+-Animated solar system with orbiting planets 
+-Constellation viewer 
+-Fun facts generator 
+-About page with mission, vision, and objectives 
+-Dark mode toggle 
+-Mobile-responsive navbar with hamburger menu
 
-b) Project Description
+c) Instructions to test login.
 
-AXN Solar System Explorer is a simple interactive solar system website that lets users explore planets, constellations, fun facts, and basic space information.
+-(Hardcoded using Javascript)
 
-The website includes animations, a login system, dark/light mode, glowing effects, and a starry background to make the experience more engaging and interactive.
+  Username: user 
+  Password: 1234
+  
+-To login and see the loading animation, register first then login using the same username and password.
 
-The goal of this project is to make learning about space easy, visual, and enjoyable for everyone.
+-Use Admin button on the login section to login instanly without loading animation.
 
-c) Features Included
+d) FRAMEWORKS AND LIBRARIES USED :
 
-User login and register system
-
-Animated solar system with orbiting planets
-
-Constellation viewer
-
-Fun facts generator
-
-About page with mission, vision, and objectives
-
-Dark mode toggle
-
-Mobile-responsive navbar with hamburger menu
-
-d) Instructions to Test Login
-
-Hardcoded credentials (using JavaScript):
-
-Username: user
-
-Password: 1234
-
-To login and see the loading animation:
-
-Register first (even though registration is just for display).
-
-Login using the same username and password.
-
-Use the Admin button on the login section to login instantly without the loading animation.
-
-e) Frameworks and Libraries Used
-
-HTML5
-
-CSS3
-
-JavaScript
-
-Bootstrap 5
-
-Font Awesome
-
-Google Fonts
-
-Chart.js
-
-    
-       
-
-
-
-
-    
-
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap 5
+- Font Awesome
+- Google Fonts
+- Chart.js
 
