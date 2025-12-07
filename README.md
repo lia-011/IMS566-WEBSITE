@@ -1,57 +1,75 @@
-IMS 566 - ADVANCED WEB DESIGN DEVELOPMENT AND CONTENT MANAGEMENT
-PREPARED BY SYAZWAN AQIM AND AHMAD NAQIU DINIE
-PREPARED FOR DR. MUHAMMAD ASYRAF BIN WAHI ANUAR
+IMS 566 - Advanced Web Design Development and Content Management
 
-1. LIVE WEBSITE LINK : 
-   
-2. GITHUB REPOSITORY LINK :
+Prepared by: Syazwan Aqim and Ahmad Naqiu Dinie
+Prepared for: Dr. Muhammad Asyraf bin Wahi Anuar
 
-3.  a) PROJECT TITLE : AXN SOLAR SYSTEM EXPLORER
+Live Website Link:
 
-       PROJECT DESCRIPTION :
-       - A simple interactive solar system website
-         that lets users explore planets, constellations,
-         fun facts, and basic space information.
-         The website includes animations, a login
-         system, and dark light mode, glowing
-         effects, and a starry background to make
-         the experience more interesting and interactive.
-         The goal of this project is to make learning
-         about space easy, visual, and enjoyable for everyone.
+[Insert your live website link here]
 
-    b) FEATURES INCLUDED :
-       -User login and register system
-       -Animated solar system with orbiting planets
-       -Constellation viewer
-       -Fun facts generator
-       -About page with mission, vision, and objectives
-       -Dark mode toggle
-       -Mobile-responsive navbar with hamburger menu
+GitHub Repository Link:
 
-    c) Instructions to test login.
+[Insert your repository link here]
 
-       -(Hardcoded using Javascript)
-         Username: user
-         Password: 1234
+a) Project Title
 
-       - To login and see the loading animation
-         register first then login using the same
-         username and password
+AXN Solar System Explorer
 
-       - Use Admin button on the login
-         section to login instanly without
-         loading animation
+b) Project Description
 
+AXN Solar System Explorer is a simple interactive solar system website that lets users explore planets, constellations, fun facts, and basic space information.
 
-     d) FRAMEWORKS AND LIBRARIES USED :
+The website includes animations, a login system, dark/light mode, glowing effects, and a starry background to make the experience more engaging and interactive.
 
-       - HTML5
-       - CSS3
-       - JavaScript
-       - Bootstrap 5
-       - Font Awesome
-       - Google Fonts
-       - Chart.js
+The goal of this project is to make learning about space easy, visual, and enjoyable for everyone.
+
+c) Features Included
+
+User login and register system
+
+Animated solar system with orbiting planets
+
+Constellation viewer
+
+Fun facts generator
+
+About page with mission, vision, and objectives
+
+Dark mode toggle
+
+Mobile-responsive navbar with hamburger menu
+
+d) Instructions to Test Login
+
+Hardcoded credentials (using JavaScript):
+
+Username: user
+
+Password: 1234
+
+To login and see the loading animation:
+
+Register first (even though registration is just for display).
+
+Login using the same username and password.
+
+Use the Admin button on the login section to login instantly without the loading animation.
+
+e) Frameworks and Libraries Used
+
+HTML5
+
+CSS3
+
+JavaScript
+
+Bootstrap 5
+
+Font Awesome
+
+Google Fonts
+
+Chart.js
 
     
        
