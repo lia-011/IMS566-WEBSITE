@@ -19,7 +19,7 @@ PREPARED FOR DR. MUHAMMAD ASYRAF BIN WAHI ANUAR
   b) FEATURES INCLUDED : 
 
      -User login and register system 
-     -Animated solar system with orbiting planets 
+     -Hover and clicking glow
      -Constellation viewer 
      -Fun facts generator 
      -About page with mission, vision, and objectives 
