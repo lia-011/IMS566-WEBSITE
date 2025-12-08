@@ -5,6 +5,8 @@ body {
   background-image: url(../images/star.png);
   background-size: cover;
   background-position: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 @media (min-width: 992px) {        /* only on lg and up, keeps mobile click working */
   .nav-item.dropdown:hover > .dropdown-menu {
@@ -810,3 +812,4 @@ body.dark-mode .sun {
 body.dark-mode .orbit {
   border: 1px solid rgba(255,255,255,0.1);
 }
+
