@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("cosmicUsername", username);
                 localStorage.setItem("cosmicLoginTime", Date.now().toString());
 
-                window.location.href = "loading.html";
+                window.location.href = "landing.html";
             } else {
                 errorMsg.textContent = "Wrong username or password!";
                 errorMsg.style.color = "#ff6b6b";
@@ -254,4 +254,5 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById('logoutBtn').addEventListener('click', () => {
   // Redirect to logout endpoint
   window.location.href = 'index.html';
+
 });
