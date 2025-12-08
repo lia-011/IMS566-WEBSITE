@@ -33,9 +33,9 @@ PREPARED FOR DR. MUHAMMAD ASYRAF BIN WAHI ANUAR
        Username: user 
        Password: 1234
   
-     -To login and see the loading animation and our website summary, register first then login.
+     -To login and see our website summary, register first then login.
 
-     -Click Admin button on the login section to login instanly without having to register and skip the loading animation.
+     -Click Admin button on the login section to login instanly without having to register.
 
    d) FRAMEWORKS AND LIBRARIES USED :
 
